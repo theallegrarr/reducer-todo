@@ -4,6 +4,8 @@ import uuid from 'uuid';
 const MARK = 'MARK';
 const ADD = 'ADD';
 const ON_INPUT_CHANGE = 'ON_INPUT_CHANGE';
+const RESET_FORM = 'RESET_FORM';
+const CLEAR_COMPLETED = 'CLEAR_COMPLETED';
 
 const initialState = [
   { id: '1', name: "Learn about reducers", completed: false },
@@ -25,14 +27,16 @@ function reducer(state, action) {
         return {
           id: todo.id,
           name: todo.name,
-          complete: action.payload.isComplete,
+          completed: action.payload.isComplete,
         };
       });
+    case CLEAR_COMPLETED:
+      return state.filter(todo => todo.completed === false);
     case ADD:
       return state.concat({
           id: uuid(),
           name: action.payload.name,
-          complete: action.payload.isComplete,
+          completed: action.payload.isComplete,
           })
     default:
       return state;
@@ -46,6 +50,8 @@ function formReducer(state, action) {
         ...state,
         [action.payload.name]: action.payload.value,
       };
+    case RESET_FORM:
+      return initialForm;
     default:
       return state;
   }
@@ -68,9 +74,12 @@ export default function Todos() {
       type: ADD,
       payload: { 
         name: formValues.name, 
-        complete: false 
+        completed: false 
       },
     });
+    formDispatch({
+      type: RESET_FORM,
+    })
   }
 
   const onValueChange = event => {
@@ -81,11 +90,17 @@ export default function Todos() {
     });
   };
 
+  const clear = () => {
+    dispatch({
+      type: CLEAR_COMPLETED,
+    })
+  }
+
   return (
     <div className='component'>
       {
         todos.map((todo) => (
-          <div key={todo.id} style={{ color: !todo.complete ? 'red' : 'green' }}>
+          <div key={todo.id} style={{ color: !todo.completed ? 'red' : 'green' }}>
             {todo.name}
             <br></br>
             <button onClick={markTodo(todo.id, true)}>Mark complete </button>
@@ -98,7 +113,8 @@ export default function Todos() {
           <input value={formValues.name} onChange={onValueChange} name='name' />
         </label><br />
       <input type='submit' />
-    </form>
+    </form><br />
+      <button onClick={clear}>Clear Completed</button>    
     </div>
   );
 }
