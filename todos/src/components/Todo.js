@@ -100,11 +100,11 @@ export default function Todos() {
     <div className='component'>
       {
         todos.map((todo) => (
-          <div key={todo.id} style={{ color: !todo.completed ? 'red' : 'green' }}>
+          <div className='todo-card' key={todo.id} style={{ color: !todo.completed ? 'red' : 'green' }}>
             {todo.name}
             <br></br>
-            <button onClick={markTodo(todo.id, true)}>Mark complete </button>
-            <button onClick={markTodo(todo.id, false)}>Mark incomplete </button>
+            <button onClick={markTodo(todo.id, true)} className='complete'>Complete </button>
+            <button onClick={markTodo(todo.id, false)} className='uncomplete'>Incomplete </button>
           </div>
         ))
       }
@@ -112,9 +112,9 @@ export default function Todos() {
         <label>Description: <br />
           <input value={formValues.name} onChange={onValueChange} name='name' />
         </label><br />
-      <input type='submit' />
+        <button className='submit' type='submit'>Submit</button>
     </form><br />
-      <button onClick={clear}>Clear Completed</button>    
+      <button onClick={clear} className='clear'>Clear Completed</button>    
     </div>
   );
 }
