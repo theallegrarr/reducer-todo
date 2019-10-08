@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import uuid from 'uuid';
 
 const MARK = 'MARK';
 const ADD = 'ADD';
@@ -28,12 +29,11 @@ function reducer(state, action) {
         };
       });
     case ADD:
-      return {
-        ...state,
-        id: action.payload.id,
-        name: action.payload.name,
-        complete: action.payload.isComplete,
-      }
+      return state.concat({
+          id: uuid(),
+          name: action.payload.name,
+          complete: action.payload.isComplete,
+          })
     default:
       return state;
   }
@@ -62,17 +62,22 @@ export default function Todos() {
     });
   };
 
-  const addTodo = (id, name, isComplete) => () => {
+  const addTodo = event => {
+    event.preventDefault();
     dispatch({
       type: ADD,
-      payload: { id, name, isComplete },
+      payload: { 
+        name: formValues.name, 
+        complete: false 
+      },
     });
   }
 
   const onValueChange = event => {
+    console.log(formValues);
     formDispatch({
       type: ON_INPUT_CHANGE,
-      payload: { id: event.target.id, name: event.target.name },
+      payload: { name: event.target.name, value: event.target.value },
     });
   };
 
@@ -89,14 +94,9 @@ export default function Todos() {
         ))
       }
       <form className='component' onSubmit={addTodo}>
-      <label>ID
-        <input value={formValues.id} onChange={onValueChange} name='id' />
-      </label><br />
-
-      <label>Description
-        <input value={formValues.name} onChange={onValueChange} name='name' />
-      </label><br />
-
+        <label>Description: <br />
+          <input value={formValues.name} onChange={onValueChange} name='name' />
+        </label><br />
       <input type='submit' />
     </form>
     </div>
