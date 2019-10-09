@@ -1,0 +1,70 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  
+  color: white;
+}
+
+button {
+  background-color: #09d3ac;
+  border-color: #09d3ac;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 2px solid white;
+}
+
+.todo-card {
+  background-color: white;
+  margin: 5px;
+  font-weight: 700;
+  width: 500px;
+}
+
+.complete {
+  background-color: limegreen;
+  font-weight: 700;
+  width: 40%;
+}
+.uncomplete {
+  background-color: lightcoral;
+  font-weight: 700;
+  width: 40%;
+}
+.clear {
+  background-color: lightcoral;
+  font-weight: 700;
+}
+
+h4 {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  color: #09d3ac;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 500px;
+  background-color: brown;
+  margin-left: 6px;
+}
+
+.submit {
+  width: 40%;
+  font-weight: 700;
+}
